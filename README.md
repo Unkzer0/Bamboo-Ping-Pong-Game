@@ -52,8 +52,7 @@
   <h2>🔗 Links</h2>
   <ul>
     <li><a href="https://unkzero0.itch.io/bamboo-ping-pong" target="_blank">Play on Itch.io</a></li>
-    <li><a href="https://github.com/Unkzer0/bamboo-ping-pong" target="_blank">Source Code (if public)</a></li>
-    <li><a href="#">Portfolio (Unk Dev)</a></li>
+    <li><a href="https://github.com/Unkzer0/Ping-Pong" target="_blank">Source Code (public)</a></li>
   </ul>
 
   <h2>🧑‍💻 Developer</h2>
