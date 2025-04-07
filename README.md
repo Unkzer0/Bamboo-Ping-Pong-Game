@@ -24,7 +24,7 @@
     </tr>
     <tr>
       <td>Move Paddle</td>
-      <td>W / S</td>
+      <td>AI movement</td>
       <td>↑ / ↓ Arrow Keys</td>
     </tr>
   </table>
@@ -52,7 +52,7 @@
   <h2>🔗 Links</h2>
   <ul>
     <li><a href="https://unkzero0.itch.io/bamboo-ping-pong" target="_blank">Play on Itch.io</a></li>
-    <li><a href="https://github.com/your-username/bamboo-ping-pong" target="_blank">Source Code (if public)</a></li>
+    <li><a href="https://github.com/Unkzer0/bamboo-ping-pong" target="_blank">Source Code (if public)</a></li>
     <li><a href="#">Portfolio (Unk Dev)</a></li>
   </ul>
 
