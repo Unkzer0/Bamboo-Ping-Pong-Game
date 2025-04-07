@@ -38,7 +38,7 @@
   </ul>
 
   <h2>📦 Project Setup (For Developers)</h2>
-  <pre><code>git clone https://github.com/your-username/bamboo-ping-pong
+  <pre><code>git clone https://github.com/Unkzer0/Ping-Pong
 # Open in Unity 2021+ and hit Play or Build to WebGL
 </code></pre>
 
