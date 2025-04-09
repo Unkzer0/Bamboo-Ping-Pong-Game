@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
-    public float speed = 10f;  
+    public float speed = 8f;
     private Rigidbody2D rb;
-    public AudioClip hitSound;  
+    public AudioClip hitSound;
     private AudioSource audioSource;
 
     void Awake()
@@ -20,8 +20,8 @@ public class Ball : MonoBehaviour
 
     public void IncreaseSpeed(float amount)
     {
-        speed += amount;  
-        rb.velocity = rb.velocity.normalized * speed;  
+        speed += amount;
+        rb.velocity = rb.velocity.normalized * speed;
     }
 
     void LaunchBall()
@@ -40,14 +40,18 @@ public class Ball : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Paddle")) 
+        if (collision.gameObject.CompareTag("Paddle"))
         {
-            speed += 0.5f;  
-            rb.velocity = rb.velocity.normalized * speed;  
+            speed += 0.5f;
+            
+            // Add a slight vertical tweak
+            float tweakY = Random.Range(-0.2f, 0.2f);
+            Vector2 newVelocity = new Vector2(rb.velocity.x, rb.velocity.y + tweakY).normalized * speed;
+            rb.velocity = newVelocity;
 
             if (hitSound != null)
             {
-                audioSource.PlayOneShot(hitSound);  
+                audioSource.PlayOneShot(hitSound);
             }
         }
     }
@@ -55,14 +59,30 @@ public class Ball : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Goal_Left"))
-        { 
+        {
             GameManager.Instance.ScorePoint("Right");
-            GameManager.Instance.RespawnBall();  
+            GameManager.Instance.RespawnBall();
         }
         else if (collision.CompareTag("Goal_Right"))
-        {   
+        {
             GameManager.Instance.ScorePoint("Left");
-            GameManager.Instance.RespawnBall();  
+            GameManager.Instance.RespawnBall();
+        }
+    }
+
+    void FixedUpdate()
+    {
+        EnsureMinVerticalVelocity();
+    }
+
+    void EnsureMinVerticalVelocity()
+    {
+        float minYVelocity = 0.5f;
+
+        if (Mathf.Abs(rb.velocity.y) < minYVelocity)
+        {
+            float directionY = rb.velocity.y >= 0 ? 1 : -1;
+            rb.velocity = new Vector2(rb.velocity.x, directionY * minYVelocity).normalized * speed;
         }
     }
 }

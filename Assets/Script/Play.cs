@@ -11,3 +11,4 @@ public class Play : MonoBehaviour
         SceneManager.LoadScene(currentSceneIndex + 1);  
     }
 }
+// add no time and easy and hard mode

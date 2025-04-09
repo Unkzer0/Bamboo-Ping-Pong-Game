@@ -15,10 +15,9 @@ public class GameManager : MonoBehaviour
 
     public int scoreLeft = 0, scoreRight = 0;
     private int maxScore = 11;
-    private float timeRemaining = 120f;  
+    private float timeRemaining = 300.0f;  
     private bool gameEnded = false;
     private GameObject currentBall;
-
     public AIPaddle leftPaddle;
     public PaddleController rightPaddle;
 
@@ -30,31 +29,56 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         gameOverPanel.SetActive(false);
+
+        if (GameSettings.Instance != null)
+        {
+            switch (GameSettings.Instance.SelectedMode)
+            {
+                case GameSettings.GameMode.Easy:
+                    leftPaddle.reactionSpeed = 0.05f;
+                    timeRemaining = 300f;
+                    break;
+                case GameSettings.GameMode.Hard:
+                    leftPaddle.reactionSpeed = 0.5f;
+                    timeRemaining = 300f;
+                    break;
+                case GameSettings.GameMode.Classic:
+                    leftPaddle.reactionSpeed = 0.1f;
+                    timeRemaining = Mathf.Infinity;
+                    if (timerText != null)
+                        timerText.gameObject.SetActive(false);
+                    break;
+            }
+        }
         SpawnBall();
     }
 
     void Update()
     {
-        if (!gameEnded)
+        if (!gameEnded && timeRemaining != Mathf.Infinity)
         {
             UpdateTimer();
         }
     }
 
     void UpdateTimer()
+{
+    if (timeRemaining > 0)
     {
-        if (timeRemaining > 0)
+        timeRemaining -= Time.deltaTime;
+
+        // Clamp to zero if it goes below
+        if (timeRemaining <= 0)
         {
-            timeRemaining -= Time.deltaTime;
-            int minutes = Mathf.FloorToInt(timeRemaining / 60);
-            int seconds = Mathf.FloorToInt(timeRemaining % 60);
-            timerText.text = minutes.ToString("0") + ":" + seconds.ToString("00");
-        }
-        else if (!gameEnded)  
-        {
+            timeRemaining = 0;
             EndGame();
         }
+
+        int minutes = Mathf.FloorToInt(timeRemaining / 60);
+        int seconds = Mathf.FloorToInt(timeRemaining % 60);
+        timerText.text = minutes.ToString("0") + ":" + seconds.ToString("00");
     }
+}
 
     public void RestartGame()
     {

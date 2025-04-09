@@ -9,6 +9,8 @@ public class AIPaddle : MonoBehaviour
     public float reactionSpeed = 0.1f; 
     public float minSize = 0.5f;
     public float shrinkAmount = 0.2f;
+    float positiveNewRange = 2.7f;
+    float negativeNewRange = -2.7f;
 
     private Vector3 originalScale;
 
@@ -27,6 +29,8 @@ public class AIPaddle : MonoBehaviour
         if (transform.localScale.y > 0.5f)  
         {
             transform.localScale -= new Vector3(0, 0.2f, 0);
+            positiveNewRange+= 0.1f;
+            negativeNewRange-= 0.1f;
         }
     }
 
@@ -34,7 +38,7 @@ public class AIPaddle : MonoBehaviour
     {
         transform.position = new Vector3(
             transform.position.x,
-            Mathf.Clamp(transform.position.y, -2.7f, 2.7f),
+            Mathf.Clamp(transform.position.y,negativeNewRange,positiveNewRange),
             transform.position.z
         );
     }
