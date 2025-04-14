@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     [SerializeField] GameObject gameOverPanel;
     [SerializeField] Button restartButton;
+    [SerializeField] Button MainMenuButton;
     [SerializeField] Text scoreLeftText;
     [SerializeField] Text scoreRightText;
     [SerializeField] Text timerText; 
@@ -85,6 +86,11 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
+    public void MainMenu()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex-1);
+    }
+
     public void ScorePoint(string player)
     {
         if (player == "Left")
@@ -144,5 +150,6 @@ public class GameManager : MonoBehaviour
         gameEnded = true;  
         gameOverPanel.SetActive(true);
         restartButton.onClick.AddListener(RestartGame);
+        MainMenuButton.onClick.AddListener(MainMenu);
     }
 }
