@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,12 +10,17 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject gameOverPanel;
     [SerializeField] Button restartButton;
     [SerializeField] Button MainMenuButton;
-    [SerializeField] Text scoreLeftText;
-    [SerializeField] Text scoreRightText;
-    [SerializeField] Text timerText; 
+    [SerializeField] TextMeshProUGUI scoreLeftText;
+    [SerializeField] TextMeshProUGUI scoreRightText;
+    [SerializeField] TextMeshProUGUI timerText; 
     [SerializeField] GameObject ballPrefab;
+    [SerializeField] GameObject powerUpspawner;
+    [SerializeField] GameObject rightpaddle;
+    [SerializeField] GameObject leftpaddle;
+    [SerializeField] TextMeshProUGUI gameoverMessage;
 
-    public int scoreLeft = 0, scoreRight = 0;
+    public int scoreLeft = 0;
+    public int scoreRight = 0;
     private int maxScore = 11;
     private float timeRemaining = 300.0f;  
     private bool gameEnded = false;
@@ -146,9 +152,20 @@ public class GameManager : MonoBehaviour
     void EndGame()
     {
         if (gameEnded) return;
-
-        gameEnded = true;  
+        gameEnded = true;
+        powerUpspawner.SetActive(false);
+        rightpaddle.SetActive(false);
+        leftpaddle.SetActive(false);
         gameOverPanel.SetActive(true);
+        if(scoreRight>scoreLeft)
+        {
+            gameoverMessage.text = "You WIN!!";
+        }
+        else
+        {
+            gameoverMessage.text = "You Lose!!";
+        }
+        
         restartButton.onClick.AddListener(RestartGame);
         MainMenuButton.onClick.AddListener(MainMenu);
     }
